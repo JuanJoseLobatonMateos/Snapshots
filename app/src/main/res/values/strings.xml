@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Snapshots</string>
+    <string name="home_title">Inicio</string>
+    <string name="home_add">Crear</string>
+    <string name="home_profile">Perfil</string>
+    <string name="btn_delete">Eliminar</string>
+</resources>

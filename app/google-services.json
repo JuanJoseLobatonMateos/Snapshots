@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "313936402864",
+    "project_id": "snapshots-40de9",
+    "storage_bucket": "snapshots-40de9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313936402864:android:0fadafc8b70d5921399e75",
+        "android_client_info": {
+          "package_name": "com.jlobatonm.snapshots"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP73IyIX8cwICQaMMOYQdk4SHfLd_yB2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313936402864:android:cfda5f9c9bab5d64399e75",
+        "android_client_info": {
+          "package_name": "com.jlobatonm.stores"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP73IyIX8cwICQaMMOYQdk4SHfLd_yB2s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
