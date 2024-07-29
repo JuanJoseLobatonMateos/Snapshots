@@ -2,6 +2,7 @@
 agp = "8.5.1"
 firebaseBom = "33.1.2"
 firebaseUiAuth = "8.0.2"
+firebaseUiDatabase = "7.1.1"
 kotlin = "1.9.21"
 coreKtx = "1.13.1"
 compiler = "4.14.2"
@@ -22,6 +23,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "compiler" }
 firebase-auth-ktx = { module = "com.google.firebase:firebase-auth-ktx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-ui-database = { module = "com.firebaseui:firebase-ui-database", version.ref = "firebaseUiDatabase" }
 firebaseui-firebase-ui-auth = { module = "com.firebaseui:firebase-ui-auth", version.ref = "firebaseUiAuth" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "ksp" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

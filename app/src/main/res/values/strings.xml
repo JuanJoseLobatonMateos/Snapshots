@@ -4,4 +4,12 @@
     <string name="home_add">Crear</string>
     <string name="home_profile">Perfil</string>
     <string name="btn_delete">Eliminar</string>
+    <string name="database_connection">https://snapshots-40de9-default-rtdb.europe-west1.firebasedatabase.app"</string>
+    <string name="post_message_title">Seleccione una imagen</string>
+    <string name="btn_share">Publicar</string>
+    <string name="img_description">Imagen de la instantanea</string>
+    <string name="til_title_hint">titulo de la instantanea</string>
+    <string name="post_message_valid_title">Por favor añada un titulo</string>
+    <string name="select_img_btn">Seleccionar imagen</string>
+    <string name="upload_progress">%1$d%%</string>
 </resources>
