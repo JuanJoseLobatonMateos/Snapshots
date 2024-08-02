@@ -12,4 +12,8 @@
     <string name="post_message_valid_title">Por favor añada un titulo</string>
     <string name="select_img_btn">Seleccionar imagen</string>
     <string name="upload_progress">%1$d%%</string>
+    <string name="main_auth_welcome">Bienvenido</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="txt_user">nombre completo</string>
+    <string name="profile_logout">Hasta pronto...</string>
 </resources>

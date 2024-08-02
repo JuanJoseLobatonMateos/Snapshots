@@ -2,7 +2,7 @@
 agp = "8.5.1"
 firebaseBom = "33.1.2"
 firebaseUiAuth = "8.0.2"
-firebaseUiDatabase = "7.1.1"
+firebaseUiDatabase = "8.0.2"
 kotlin = "1.9.21"
 coreKtx = "1.13.1"
 compiler = "4.14.2"
@@ -16,6 +16,7 @@ ksp = "4.16.0"
 constraintlayout = "2.1.4"
 googleGmsGoogleServices = "4.4.2"
 firebaseStorage = "21.0.0"
+firebaseDatabaseKtx = "21.0.0"
 
 
 [libraries]
@@ -35,9 +36,9 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-

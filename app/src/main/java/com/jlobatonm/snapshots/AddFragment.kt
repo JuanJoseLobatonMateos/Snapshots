@@ -21,9 +21,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.StorageReference
 import com.jlobatonm.snapshots.databinding.FragmentAddBinding
 import java.io.File
@@ -33,16 +35,14 @@ import java.util.Date
 import java.util.Locale
 
 class AddFragment : Fragment() {
-    
-    private val pathSnapshots = "snapshots"
-    
+
     private lateinit var mBinding: FragmentAddBinding
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
     private lateinit var cameraLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private lateinit var mStorageReference: StorageReference
     private lateinit var mDatabaseReference: DatabaseReference
-    
+
     private var mPhotoSelectedUri: Uri? = null
     private var currentPhotoPath: String? = null
 
@@ -50,18 +50,18 @@ class AddFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         mBinding = FragmentAddBinding.inflate(inflater, container, false)
         return mBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
+
         mStorageReference = FirebaseStorage.getInstance().reference
-        mDatabaseReference = FirebaseDatabase.getInstance(getString(R.string.database_connection)).reference.child(pathSnapshots)
-        
-        
+        mDatabaseReference = FirebaseDatabase.getInstance(getString(R.string.database_connection)).reference.child(
+            PATH_SNAPSHOTS
+        )
+
         galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 mPhotoSelectedUri = result.data?.data
@@ -100,7 +100,7 @@ class AddFragment : Fragment() {
 
     private fun checkPermissionsAndOpenGalleryOrCamera() {
         val permissions = mutableListOf<String>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13 y superiores
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
                 permissions.add(Manifest.permission.READ_MEDIA_IMAGES)
             }
@@ -178,24 +178,21 @@ class AddFragment : Fragment() {
         }
     }
 
-   
     private fun postSnapshot() {
         hideKeyboard()
         mBinding.progressBar.visibility = View.VISIBLE
-       val key = mDatabaseReference.push().key!!
-        
-        val storageReference = mStorageReference.child(pathSnapshots).child("my_photo")
+        val key = mDatabaseReference.push().key!!
+
+        val storageReference = mStorageReference.child(PATH_SNAPSHOTS).child(FirebaseAuth.getInstance().currentUser!!.uid).child(key)
         if (mPhotoSelectedUri != null) {
             storageReference.putFile(mPhotoSelectedUri!!)
                 .addOnProgressListener {
-                    val progress  = (100.0 * it.bytesTransferred / it.totalByteCount).toInt()
+                    val progress = (100.0 * it.bytesTransferred / it.totalByteCount).toInt()
                     mBinding.progressBar.progress = progress
                     mBinding.tvMessage.text = getString(R.string.upload_progress, progress)
-                    
                 }
                 .addOnCompleteListener {
                     mBinding.progressBar.visibility = View.INVISIBLE
-                    
                 }
                 .addOnSuccessListener { it ->
                     Snackbar.make(mBinding.root, "Instantanea publicada", Snackbar.LENGTH_SHORT).show()
@@ -205,20 +202,27 @@ class AddFragment : Fragment() {
                         mBinding.tvMessage.text = getString(R.string.post_message_title)
                     }
                 }
-                .addOnFailureListener {
-                    Snackbar.make(mBinding.root, "Error al publicar la instantanea", Snackbar.LENGTH_SHORT).show()
+                .addOnFailureListener { exception ->
+                    if (exception is StorageException && exception.errorCode == StorageException.ERROR_NOT_AUTHORIZED) {
+                        Snackbar.make(mBinding.root, "Error: No permission to access this object", Snackbar.LENGTH_SHORT).show()
+                    } else {
+                        Snackbar.make(mBinding.root, "Error al publicar la instantanea", Snackbar.LENGTH_SHORT).show()
+                    }
                 }
         }
     }
-    
+
     private fun hideKeyboard() {
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(mBinding.root.windowToken, 0)
     }
-    
+
     private fun saveSnapshot(key: String, url: String, title: String) {
         val snapshot = Snapshot(title = title, photoUrl = url)
         mDatabaseReference.child(key).setValue(snapshot)
-    
+    }
+
+    companion object {
+        const val PATH_SNAPSHOTS = "snapshots"
     }
 }
