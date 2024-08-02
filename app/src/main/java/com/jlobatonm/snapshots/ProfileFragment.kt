@@ -45,4 +45,9 @@ class ProfileFragment : Fragment()
         }
         
     }
+    
+    public fun devolverUsuario(): String
+    {
+        return mBinding.tvName.toString()
+    }
 }

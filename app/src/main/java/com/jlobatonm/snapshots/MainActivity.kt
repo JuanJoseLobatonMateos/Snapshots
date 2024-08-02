@@ -129,6 +129,14 @@ class MainActivity : AppCompatActivity() , MainAux
                 else -> false
             }
         }
+        mBinding.bottomNav.setOnItemReselectedListener {
+            when(it.itemId)
+            {
+                R.id.action_home -> (homeFragment as HomeAux).goToTop()
+            }
+        }
+        // Set default selected item to home
+        mBinding.bottomNav.selectedItemId = R.id.action_home
     }
     
     override fun onResume()

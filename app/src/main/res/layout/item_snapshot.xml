@@ -9,25 +9,41 @@
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/common_padding_default"
         android:layout_marginEnd="@dimen/common_padding_default"
         android:background="?attr/selectableItemBackground"
-        android:contentDescription="@string/btn_delete"/>
-    
+        android:contentDescription="@string/btn_delete"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/tvUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#546E7A"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDelete"
+        app:layout_constraintEnd_toStartOf="@+id/btnDelete"
+        app:layout_constraintStart_toEndOf="@+id/tvTitle"
+        app:layout_constraintTop_toTopOf="@id/btnDelete"
+        tools:text="Juan Lobaton"
+        tools:ignore="SmallSp" />
+
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/common_padding_default"
         android:textAppearance="?attr/textAppearanceSubtitle2"
-        tools:text="Titulo de la instantanea"
+        app:layout_constraintBottom_toBottomOf="@id/btnDelete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnDelete"
+        app:layout_constraintEnd_toStartOf="@id/tvUser"
+
         app:layout_constraintTop_toTopOf="@id/btnDelete"
-        app:layout_constraintBottom_toBottomOf="@id/btnDelete"/>
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="Titulo de la instantanea" />
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/cbLike"

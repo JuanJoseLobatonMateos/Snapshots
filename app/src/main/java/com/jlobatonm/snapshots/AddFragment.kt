@@ -197,10 +197,17 @@ class AddFragment : Fragment() {
                 .addOnSuccessListener { it ->
                     Snackbar.make(mBinding.root, "Instantanea publicada", Snackbar.LENGTH_SHORT).show()
                     it.storage.downloadUrl.addOnSuccessListener {
-                        saveSnapshot(key, it.toString(), mBinding.etTitle.text.toString().trim())
+                        val username= FirebaseAuth.getInstance().currentUser?.displayName?:"Usuario desconocido"
+                        saveSnapshot(key, it.toString(), mBinding.etTitle.text.toString().trim(), username)
                         mBinding.tilTitle.visibility = View.GONE
                         mBinding.tvMessage.text = getString(R.string.post_message_title)
+                        mBinding.imgPhoto.setImageURI(null)
+                        mPhotoSelectedUri = null
                     }
+                    // Navigate back to HomeFragment
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.nav_host_fragment, HomeFragment())
+                        .commit()
                 }
                 .addOnFailureListener { exception ->
                     if (exception is StorageException && exception.errorCode == StorageException.ERROR_NOT_AUTHORIZED) {
@@ -216,9 +223,9 @@ class AddFragment : Fragment() {
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(mBinding.root.windowToken, 0)
     }
-
-    private fun saveSnapshot(key: String, url: String, title: String) {
-        val snapshot = Snapshot(title = title, photoUrl = url)
+    
+    private fun saveSnapshot(key: String, url: String, title: String, userName: String) {
+        val snapshot = Snapshot(title = title, photoUrl = url, userName = userName)
         mDatabaseReference.child(key).setValue(snapshot)
     }
 
