@@ -81,6 +81,8 @@ class HomeFragment : Fragment(), HomeAux {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .centerCrop()
                         .into(binding.imgSnapshot)
+                    binding.btnDelete.visibility = if (FirebaseAuth.getInstance().currentUser?.displayName == snapshot.userName) View.VISIBLE else View.GONE
+                    
                 }
             }
             

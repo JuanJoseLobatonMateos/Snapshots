@@ -14,6 +14,8 @@
         android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/btn_delete"
         android:src="@drawable/ic_delete"
+        app:layout_constraintBottom_toTopOf="@id/imgSnapshot"
+        android:paddingBottom="@dimen/common_padding_min"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
@@ -36,12 +38,12 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_padding_default"
+        android:layout_marginBottom="@dimen/common_padding_min"
         android:layout_marginHorizontal="@dimen/common_padding_default"
         android:textAppearance="?attr/textAppearanceSubtitle2"
-        app:layout_constraintBottom_toBottomOf="@id/btnDelete"
+        app:layout_constraintBottom_toTopOf="@id/imgSnapshot"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/btnDelete"
-        app:layout_constraintTop_toTopOf="@id/btnDelete"
         app:layout_constraintVertical_bias="1.0"
         tools:text="Titulo de la instantanea" />
 
@@ -62,9 +64,19 @@
         app:layout_constraintDimensionRatio="H,4:3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnDelete"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/cbLike"
         android:layout_marginTop="@dimen/common_padding_min"
         tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/separator"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintTop_toBottomOf="@id/cbLike"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/common_padding_default" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
