@@ -4,5 +4,11 @@
         <!-- Customize your dark theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:colorBackground">@color/light_dark_background</item>
+        <item name="colorOnBackground">@color/light_dark_text</item>
+        <item name="colorPrimary">@color/light_dark_primary</item>
+        <item name="colorOnPrimary">@color/light_dark_text</item>
+        <item name="colorSecondary">@color/light_dark_secondary</item>
+        <item name="colorOnSecondary">@color/light_dark_text</item>
     </style>
 </resources>

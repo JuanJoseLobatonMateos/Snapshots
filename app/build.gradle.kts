@@ -51,11 +51,11 @@ dependencies {
     implementation(libs.firebase.auth.ktx)
     
     // FirebaseUI for Firebase Auth
-    implementation (libs.firebaseui.firebase.ui.auth)
+    implementation(libs.firebaseui.firebase.ui.auth)
     implementation(libs.firebase.database.ktx)
     // Skip this if you don't want to use integration libraries or configure Glide.
     annotationProcessor(libs.compiler)
-    ksp (libs.ksp)
+    ksp(libs.ksp)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -64,26 +64,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.constraintlayout)
     
-    // FirebaseUI for Firebase Auth
-    implementation (libs.firebaseui.firebase.ui.auth)
-    
-    // Import the BoM for the Firebase platform
-    implementation(platform(libs.firebase.bom))
     // FirebaseUI for Firebase Realtime Database
     implementation(libs.firebase.ui.database)
-    // Declare the dependency for the Cloud Storage
-    implementation(libs.firebase.storage)
-    
-    //Glide
-    implementation (libs.glide)
-    ksp (libs.ksp)
-    
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
 }

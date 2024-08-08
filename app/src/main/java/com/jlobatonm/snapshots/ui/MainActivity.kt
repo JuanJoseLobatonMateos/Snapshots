@@ -1,4 +1,4 @@
-package com.jlobatonm.snapshots.ui.activities
+package com.jlobatonm.snapshots.ui
 
 import android.os.Bundle
 import android.os.DeadObjectException
@@ -12,14 +12,15 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.jlobatonm.snapshots.utils.HomeAux
-import com.jlobatonm.snapshots.utils.MainAux
 import com.jlobatonm.snapshots.R
 import com.jlobatonm.snapshots.SnapshotsApplication
 import com.jlobatonm.snapshots.databinding.ActivityMainBinding
 import com.jlobatonm.snapshots.ui.fragments.AddFragment
 import com.jlobatonm.snapshots.ui.fragments.HomeFragment
 import com.jlobatonm.snapshots.ui.fragments.ProfileFragment
+import com.jlobatonm.snapshots.utils.HomeAux
+import com.jlobatonm.snapshots.utils.MainAux
+
 
 class MainActivity : AppCompatActivity() , MainAux
 {
@@ -45,6 +46,9 @@ class MainActivity : AppCompatActivity() , MainAux
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        
+        
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         try {
@@ -67,15 +71,16 @@ class MainActivity : AppCompatActivity() , MainAux
                         .setIsSmartLockEnabled(false)
                         .setAvailableProviders(
                             listOf(
-                                AuthUI.IdpConfig.EmailBuilder().build(), // Email
-                                AuthUI.IdpConfig.GoogleBuilder().build() // Google
+                                AuthUI.IdpConfig.GoogleBuilder().build()
                             )
                         )
                         .setTosAndPrivacyPolicyUrls(
                             "https://example.com/terms.html",
                             "https://example.com/privacy.html"
                         )
-                        .setAlwaysShowSignInMethodScreen(true) // Mostrar siempre la pantalla de métodos de inicio de sesión
+                        .setAlwaysShowSignInMethodScreen(true)
+                        .setLogo(R.drawable.logo_app)// Set logo de la app
+                        .setTheme(R.style.Theme_Snapshots)// Set theme
                         .build()
                 )
                 mFragmentManager = null

@@ -16,7 +16,6 @@
     <string name="logout">Cerrar sesión</string>
     <string name="txt_user">nombre completo</string>
     <string name="profile_logout">Hasta pronto...</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_delete_success">Instantanea eliminada</string>
     <string name="home_delete_title">Eliminar</string>
@@ -26,4 +25,13 @@
     <string name="home_delete_error">Eroor al eliminar la foto</string>
     <string name="home_delete_not_allowed">No eres el propietario de la instantanea</string>
     <string name="profile_image_desc">imagen de usuario</string>
+    <string name="full_screen_image">Imagen completa</string>
+    <string name="permission_required">Se requieren permisos para usar esta función</string>
+    <string name="ok">Ok</string>
+    <string name="select_array_gallery">Galería</string>
+    <string name="select_array_camera">Cámara</string>
+    <string name="select_option_array">Seleccionar opción</string>
+    <string name="post_message_success">Instantanea publicada</string>
+    <string name="post_message_error_not_authorized">Error: No tienes permiso para acceder a este objeto</string>
+    <string name="post_message_error">Error al publicar la instantánea</string>
 </resources>

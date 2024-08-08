@@ -1,7 +1,9 @@
 package com.jlobatonm.snapshots.ui.fragments
 
+import com.jlobatonm.snapshots.ui.FullScreenImageActivity
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -81,10 +83,27 @@ class HomeFragment : Fragment(), HomeAux {
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .centerCrop()
                         .into(binding.imgSnapshot)
-                    binding.btnDelete.visibility = if (FirebaseAuth.getInstance().currentUser?.displayName == snapshot.userName) View.VISIBLE else View.GONE
                     
+                    // Load uploader's profile image
+                    val userProfileUrl = model.userProfileUrl
+                   
+                    Glide.with(itemView.context) // Ensure the correct context is used
+                            .load(userProfileUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .centerCrop()
+                            .circleCrop()
+                            .into(binding.icUser!!)
+                    
+                    
+                    binding.btnDelete.visibility = if (FirebaseAuth.getInstance().currentUser?.displayName == snapshot.userName) View.VISIBLE else View.GONE
+                    binding.imgSnapshot.setOnClickListener {
+                        val intent = Intent(mContext, FullScreenImageActivity::class.java)
+                        intent.putExtra("IMAGE_URL", model.photoUrl)
+                        mContext.startActivity(intent)
+                    }
                 }
             }
+         
             
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChanged() {
@@ -109,6 +128,7 @@ class HomeFragment : Fragment(), HomeAux {
         }
     }
     
+   
     override fun onStart() {
         super.onStart()
         mFirebaseAdapter.startListening()
@@ -150,6 +170,7 @@ class HomeFragment : Fragment(), HomeAux {
             Toast.makeText(context, R.string.home_delete_not_allowed, Toast.LENGTH_SHORT).show()
         }
     }
+    
     
     private fun setLike(snapshot: Snapshot, checked: Boolean) {
         val databaseReference = FirebaseDatabase.getInstance(getString(R.string.database_connection)).reference.child("snapshots")

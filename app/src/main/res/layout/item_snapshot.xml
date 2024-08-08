@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,6 +8,7 @@
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/common_padding_min"
         android:layout_marginTop="@dimen/common_padding_default"
         android:layout_marginEnd="@dimen/common_padding_default"
         android:background="?attr/selectableItemBackground"
@@ -51,11 +51,11 @@
         android:id="@+id/cbLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:button="@drawable/ic_like"
         android:layout_marginStart="@dimen/common_padding_default"
-        android:layout_marginBottom="@dimen/common_padding_default"/>
+        android:layout_marginBottom="@dimen/common_padding_default"
+        android:button="@drawable/ic_like"
+        app:layout_constraintTop_toBottomOf="@id/imgSnapshot"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imgSnapshot"
@@ -66,7 +66,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/cbLike"
-        android:layout_marginTop="@dimen/common_padding_min"
+        android:layout_marginTop="32dp"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/icUser"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_profile"
+        android:layout_marginStart="@dimen/common_padding_default"
+        app:layout_constraintStart_toEndOf="@+id/tvUser"
+        app:layout_constraintTop_toTopOf="@+id/tvUser"
+        app:layout_constraintBottom_toBottomOf="@id/tvUser"
         tools:ignore="ContentDescription" />
 
     <View
@@ -77,6 +88,6 @@
         app:layout_constraintTop_toBottomOf="@id/cbLike"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/common_padding_default" />
+        android:layout_marginTop="@dimen/common_padding_min" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
