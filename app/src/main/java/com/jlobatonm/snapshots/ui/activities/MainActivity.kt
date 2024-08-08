@@ -1,6 +1,8 @@
-package com.jlobatonm.snapshots
+package com.jlobatonm.snapshots.ui.activities
 
 import android.os.Bundle
+import android.os.DeadObjectException
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +12,14 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.jlobatonm.snapshots.utils.HomeAux
+import com.jlobatonm.snapshots.utils.MainAux
+import com.jlobatonm.snapshots.R
+import com.jlobatonm.snapshots.SnapshotsApplication
 import com.jlobatonm.snapshots.databinding.ActivityMainBinding
+import com.jlobatonm.snapshots.ui.fragments.AddFragment
+import com.jlobatonm.snapshots.ui.fragments.HomeFragment
+import com.jlobatonm.snapshots.ui.fragments.ProfileFragment
 
 class MainActivity : AppCompatActivity() , MainAux
 {
@@ -26,7 +35,7 @@ class MainActivity : AppCompatActivity() , MainAux
     private val authResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == RESULT_OK) {
-                Toast.makeText(this, R.string.main_auth_welcome, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this , R.string.main_auth_welcome , Toast.LENGTH_SHORT).show()
             } else {
                 if (IdpResponse.fromResultIntent(it.data) == null) {
                     finish()
@@ -38,8 +47,15 @@ class MainActivity : AppCompatActivity() , MainAux
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+        try {
+            setupAuth()
+            // Código que interactúa con el objeto Window
+            // Por ejemplo, configuraciones de la ventana o interacciones con el WindowManager
+        } catch (e: DeadObjectException) {
+            Log.e("MainActivity" , "DeadObjectException caught: ${e.message}")
+            // Manejo adicional de la excepción, si es necesario
+        }
         
-        setupAuth()
     }
     
     private fun setupAuth() {
@@ -95,13 +111,13 @@ class MainActivity : AppCompatActivity() , MainAux
         mActiveFragment = homeFragment
         
         fragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment, profileFragment, ProfileFragment::class.java.name)
+            .add(R.id.nav_host_fragment , profileFragment , ProfileFragment::class.java.name)
             .hide(profileFragment).commit()
         fragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment, addFragment, AddFragment::class.java.name)
+            .add(R.id.nav_host_fragment , addFragment , AddFragment::class.java.name)
             .hide(addFragment).commit()
         fragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment, homeFragment, HomeFragment::class.java.name).commit()
+            .add(R.id.nav_host_fragment , homeFragment , HomeFragment::class.java.name).commit()
         
         mBinding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
