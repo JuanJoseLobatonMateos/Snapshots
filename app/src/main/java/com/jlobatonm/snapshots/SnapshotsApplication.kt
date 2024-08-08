@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseUser
 
 class SnapshotsApplication : Application() {
     companion object {
+        const val PROPERTY_CREATED_AT = "timestamp"
         const val PATH_SNAPSHOTS = "snapshots"
         const val PROPERTY_LIKE_LIST = "likeList"
         

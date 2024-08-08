@@ -16,4 +16,14 @@
     <string name="logout">Cerrar sesión</string>
     <string name="txt_user">nombre completo</string>
     <string name="profile_logout">Hasta pronto...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_delete_success">Instantanea eliminada</string>
+    <string name="home_delete_title">Eliminar</string>
+    <string name="home_delete_message">¿Eliminar instantanea?</string>
+    <string name="home_delete_positive">Aceptar</string>
+    <string name="home_delete_negative">Cancelar</string>
+    <string name="home_delete_error">Eroor al eliminar la foto</string>
+    <string name="home_delete_not_allowed">No eres el propietario de la instantanea</string>
+    <string name="profile_image_desc">imagen de usuario</string>
 </resources>

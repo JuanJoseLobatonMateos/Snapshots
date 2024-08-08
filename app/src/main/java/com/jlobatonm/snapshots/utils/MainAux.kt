@@ -1,4 +1,4 @@
-package com.jlobatonm.snapshots
+package com.jlobatonm.snapshots.utils
 
 import com.google.android.material.snackbar.Snackbar
 

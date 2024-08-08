@@ -1,4 +1,4 @@
-package com.jlobatonm.snapshots
+package com.jlobatonm.snapshots.ui.fragments
 
 import android.Manifest
 import android.app.Activity
@@ -27,7 +27,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.StorageReference
+import com.jlobatonm.snapshots.R
 import com.jlobatonm.snapshots.databinding.FragmentAddBinding
+import com.jlobatonm.snapshots.entities.Snapshot
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -87,9 +89,8 @@ class AddFragment : Fragment() {
                 openGalleryOrCamera()
             } else {
                 AlertDialog.Builder(requireContext())
-                    .setTitle("Permission Denied")
-                    .setMessage("Permissions are required to access photos and camera. Please enable them in the app settings.")
-                    .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                    .setMessage("Permissions are required to use this feature")
+                    .setPositiveButton("OK") { _, _ -> }
                     .show()
             }
         }
@@ -177,12 +178,12 @@ class AddFragment : Fragment() {
             currentPhotoPath = absolutePath
         }
     }
-
+    
     private fun postSnapshot() {
         hideKeyboard()
         mBinding.progressBar.visibility = View.VISIBLE
         val key = mDatabaseReference.push().key!!
-
+        
         val storageReference = mStorageReference.child(PATH_SNAPSHOTS).child(FirebaseAuth.getInstance().currentUser!!.uid).child(key)
         if (mPhotoSelectedUri != null) {
             storageReference.putFile(mPhotoSelectedUri!!)
@@ -194,26 +195,27 @@ class AddFragment : Fragment() {
                 .addOnCompleteListener {
                     mBinding.progressBar.visibility = View.INVISIBLE
                 }
-                .addOnSuccessListener { it ->
-                    Snackbar.make(mBinding.root, "Instantanea publicada", Snackbar.LENGTH_SHORT).show()
-                    it.storage.downloadUrl.addOnSuccessListener {
-                        val username= FirebaseAuth.getInstance().currentUser?.displayName?:"Usuario desconocido"
-                        saveSnapshot(key, it.toString(), mBinding.etTitle.text.toString().trim(), username)
+                .addOnSuccessListener {
+                    Snackbar.make(mBinding.root, "Instantánea publicada", Snackbar.LENGTH_SHORT).show()
+                    it.storage.downloadUrl.addOnSuccessListener { uri ->
+                        val username = FirebaseAuth.getInstance().currentUser!!.displayName
+                        saveSnapshot(key, uri.toString(), mBinding.etTitle.text.toString().trim(), username!!)
                         mBinding.tilTitle.visibility = View.GONE
                         mBinding.tvMessage.text = getString(R.string.post_message_title)
                         mBinding.imgPhoto.setImageURI(null)
                         mPhotoSelectedUri = null
+                        
+                        // Reiniciar la aplicación
+                        val intent = requireActivity().packageManager.getLaunchIntentForPackage(requireActivity().packageName)
+                        intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
                     }
-                    // Navigate back to HomeFragment
-                    parentFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment, HomeFragment())
-                        .commit()
                 }
                 .addOnFailureListener { exception ->
                     if (exception is StorageException && exception.errorCode == StorageException.ERROR_NOT_AUTHORIZED) {
                         Snackbar.make(mBinding.root, "Error: No permission to access this object", Snackbar.LENGTH_SHORT).show()
                     } else {
-                        Snackbar.make(mBinding.root, "Error al publicar la instantanea", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(mBinding.root, "Error al publicar la instantánea", Snackbar.LENGTH_SHORT).show()
                     }
                 }
         }
@@ -223,7 +225,7 @@ class AddFragment : Fragment() {
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(mBinding.root.windowToken, 0)
     }
-    
+
     private fun saveSnapshot(key: String, url: String, title: String, userName: String) {
         val snapshot = Snapshot(title = title, photoUrl = url, userName = userName)
         mDatabaseReference.child(key).setValue(snapshot)
@@ -232,4 +234,5 @@ class AddFragment : Fragment() {
     companion object {
         const val PATH_SNAPSHOTS = "snapshots"
     }
+   
 }

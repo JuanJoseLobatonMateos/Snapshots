@@ -1,4 +1,4 @@
-package com.jlobatonm.snapshots
+package com.jlobatonm.snapshots.entities
 
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
@@ -13,4 +13,4 @@ import com.google.firebase.database.IgnoreExtraProperties
  * Todos los derechos reservados 2024
  **********************************************************/
 @IgnoreExtraProperties
-data class Snapshot(@get:Exclude var id: String = "" , var title: String = "" , var photoUrl: String = "" , var likelist: Map<String, Boolean> = mutableMapOf(), var userName: String = "")
+data class Snapshot(@get:Exclude var id: String = "" , var title: String = "" , var photoUrl: String = "" , var likelist: Map<String, Boolean> = mutableMapOf(), var userName: String = "", var timestamp: Long = System.currentTimeMillis() )

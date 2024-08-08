@@ -24,10 +24,11 @@
         android:layout_height="wrap_content"
         android:textColor="#546E7A"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnDelete"
-        app:layout_constraintEnd_toStartOf="@+id/btnDelete"
-        app:layout_constraintStart_toEndOf="@+id/tvTitle"
-        app:layout_constraintTop_toTopOf="@id/btnDelete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/cbLike"
+        app:layout_constraintBottom_toBottomOf="@id/cbLike"
+        app:layout_constraintStart_toEndOf="@id/cbLike"
+        app:layout_constraintTop_toBottomOf="@id/imgSnapshot"
         tools:text="Juan Lobaton"
         tools:ignore="SmallSp" />
 
@@ -39,8 +40,7 @@
         android:textAppearance="?attr/textAppearanceSubtitle2"
         app:layout_constraintBottom_toBottomOf="@id/btnDelete"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tvUser"
-
+        app:layout_constraintEnd_toEndOf="@id/btnDelete"
         app:layout_constraintTop_toTopOf="@id/btnDelete"
         app:layout_constraintVertical_bias="1.0"
         tools:text="Titulo de la instantanea" />
@@ -65,7 +65,6 @@
         app:layout_constraintTop_toBottomOf="@id/btnDelete"
         app:layout_constraintBottom_toTopOf="@id/cbLike"
         android:layout_marginTop="@dimen/common_padding_min"
-        />
-    
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
