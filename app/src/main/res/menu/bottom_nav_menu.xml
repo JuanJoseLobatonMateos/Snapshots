@@ -2,18 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-
+    <!-- Elemento del menú para agregar una nueva instantánea -->
     <item
         android:id="@+id/action_add"
         android:title="@string/home_add"
         android:icon="@drawable/ic_add_img"
         app:showAsAction="never"/>
+
+    <!-- Elemento del menú para ir a la pantalla principal -->
     <item
         android:id="@+id/action_home"
         android:title="@string/home_title"
         android:icon="@drawable/ic_home"
         app:showAsAction="never" />
+
+    <!-- Elemento del menú para ir al perfil del usuario -->
     <item
         android:id="@+id/action_profile"
         android:title="@string/home_profile"

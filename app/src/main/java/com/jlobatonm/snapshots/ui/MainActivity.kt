@@ -21,47 +21,49 @@ import com.jlobatonm.snapshots.ui.fragments.ProfileFragment
 import com.jlobatonm.snapshots.utils.HomeAux
 import com.jlobatonm.snapshots.utils.MainAux
 
+class MainActivity : AppCompatActivity(), MainAux {
 
-class MainActivity : AppCompatActivity() , MainAux
-{
-    
+    // Variable de binding para el layout principal
     private lateinit var mBinding: ActivityMainBinding
-    
+
+    // Fragmento activo y administrador de fragmentos
     private lateinit var mActiveFragment: Fragment
     private var mFragmentManager: FragmentManager? = null
-    
+
+    // Listener de autenticación y instancia de FirebaseAuth
     private lateinit var mAuthListener: FirebaseAuth.AuthStateListener
     private var mFirebaseAuth: FirebaseAuth? = null
-    
-    private val authResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == RESULT_OK) {
-                Toast.makeText(this , R.string.main_auth_welcome , Toast.LENGTH_SHORT).show()
-            } else {
-                if (IdpResponse.fromResultIntent(it.data) == null) {
-                    finish()
-                }
+
+    // Resultado de la autenticación
+    private val authResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            Toast.makeText(this, R.string.main_auth_welcome, Toast.LENGTH_SHORT).show()
+        } else {
+            if (IdpResponse.fromResultIntent(it.data) == null) {
+                finish()
             }
         }
-    
+    }
+
+    // Método onCreate para inicializar la actividad
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
-        
-        
+
+        // Inflar el layout usando view binding
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+
         try {
             setupAuth()
             // Código que interactúa con el objeto Window
             // Por ejemplo, configuraciones de la ventana o interacciones con el WindowManager
         } catch (e: DeadObjectException) {
-            Log.e("MainActivity" , "DeadObjectException caught: ${e.message}")
+            Log.e("MainActivity", "DeadObjectException caught: ${e.message}")
             // Manejo adicional de la excepción, si es necesario
         }
-        
     }
-    
+
+    // Configurar la autenticación de Firebase
     private fun setupAuth() {
         mFirebaseAuth = FirebaseAuth.getInstance()
         mAuthListener = FirebaseAuth.AuthStateListener {
@@ -71,6 +73,7 @@ class MainActivity : AppCompatActivity() , MainAux
                         .setIsSmartLockEnabled(false)
                         .setAvailableProviders(
                             listOf(
+                                AuthUI.IdpConfig.EmailBuilder().build(),
                                 AuthUI.IdpConfig.GoogleBuilder().build()
                             )
                         )
@@ -79,20 +82,19 @@ class MainActivity : AppCompatActivity() , MainAux
                             "https://example.com/privacy.html"
                         )
                         .setAlwaysShowSignInMethodScreen(true)
-                        .setLogo(R.drawable.logo_app)// Set logo de la app
-                        .setTheme(R.style.Theme_Snapshots)// Set theme
+                        .setLogo(R.drawable.logo_app) // Set logo de la app
+                        .setTheme(R.style.Theme_Snapshots) // Set theme
                         .build()
                 )
                 mFragmentManager = null
             } else {
                 SnapshotsApplication.currentUser = it.currentUser!!
-                
-                val fragmentProfile =
-                    mFragmentManager?.findFragmentByTag(ProfileFragment::class.java.name)
+
+                val fragmentProfile = mFragmentManager?.findFragmentByTag(ProfileFragment::class.java.name)
                 fragmentProfile?.let {
                     // Manejar fragmento existente
                 }
-                
+
                 if (mFragmentManager == null) {
                     // Inicializar el administrador de fragmentos y cargar el fragmento inicial
                     mFragmentManager = supportFragmentManager
@@ -101,89 +103,77 @@ class MainActivity : AppCompatActivity() , MainAux
             }
         }
     }
-    
+
+    // Configurar la navegación inferior
     private fun setupBottomNav(fragmentManager: FragmentManager) {
         mFragmentManager?.let { // Limpiar antes para prevenir errores
             for (fragment in it.fragments) {
-                it.beginTransaction().remove(fragment!!).commit()
+                it.beginTransaction().remove(fragment).commit()
             }
         }
-        
+
         val homeFragment = HomeFragment()
         val addFragment = AddFragment()
         val profileFragment = ProfileFragment()
-        
+
         mActiveFragment = homeFragment
-        
+
         fragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment , profileFragment , ProfileFragment::class.java.name)
+            .add(R.id.nav_host_fragment, profileFragment, ProfileFragment::class.java.name)
             .hide(profileFragment).commit()
         fragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment , addFragment , AddFragment::class.java.name)
+            .add(R.id.nav_host_fragment, addFragment, AddFragment::class.java.name)
             .hide(addFragment).commit()
         fragmentManager.beginTransaction()
-            .add(R.id.nav_host_fragment , homeFragment , HomeFragment::class.java.name).commit()
-        
+            .add(R.id.nav_host_fragment, homeFragment, HomeFragment::class.java.name).commit()
+
         mBinding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.action_home -> {
-                    fragmentManager.beginTransaction().hide(mActiveFragment).show(homeFragment)
-                        .commit()
+                    fragmentManager.beginTransaction().hide(mActiveFragment).show(homeFragment).commit()
                     mActiveFragment = homeFragment
                     true
                 }
-                
                 R.id.action_add -> {
-                    fragmentManager.beginTransaction().hide(mActiveFragment).show(addFragment)
-                        .commit()
+                    fragmentManager.beginTransaction().hide(mActiveFragment).show(addFragment).commit()
                     mActiveFragment = addFragment
                     true
                 }
-                
                 R.id.action_profile -> {
-                    fragmentManager.beginTransaction().hide(mActiveFragment).show(profileFragment)
-                        .commit()
+                    fragmentManager.beginTransaction().hide(mActiveFragment).show(profileFragment).commit()
                     mActiveFragment = profileFragment
                     true
                 }
-                
                 else -> false
             }
         }
+
         mBinding.bottomNav.setOnItemReselectedListener {
-            when(it.itemId)
-            {
+            when (it.itemId) {
                 R.id.action_home -> (homeFragment as HomeAux).goToTop()
             }
         }
+
         // Set default selected item to home
         mBinding.bottomNav.selectedItemId = R.id.action_home
     }
-    
-    override fun onResume()
-    {
+
+    // Agregar el listener de autenticación al reanudar la actividad
+    override fun onResume() {
         super.onResume()
         mFirebaseAuth?.addAuthStateListener(mAuthListener)
     }
-    
-    override fun onPause()
-    {
+
+    // Remover el listener de autenticación al pausar la actividad
+    override fun onPause() {
         super.onPause()
         mFirebaseAuth?.removeAuthStateListener(mAuthListener)
     }
-    
-    /*
-    *   MainAux
-    * */
-    override fun showMessage(resId: Int , duration: Int)
-    {
-        Snackbar.make(mBinding.root , resId , duration)
+
+    // Implementación de la interfaz MainAux
+    override fun showMessage(resId: Int, duration: Int) {
+        Snackbar.make(mBinding.root, resId, duration)
             .setAnchorView(mBinding.bottomNav)
             .show()
     }
-    
 }
-
-    
-
-

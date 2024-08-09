@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Botón para eliminar una instantánea -->
     <ImageButton
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
@@ -20,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TouchTargetSizeCheck" />
 
+    <!-- Nombre del usuario -->
     <TextView
         android:id="@+id/tvUser"
         android:layout_width="wrap_content"
@@ -34,6 +36,7 @@
         tools:text="Juan Lobaton"
         tools:ignore="SmallSp" />
 
+    <!-- Título de la instantánea -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
@@ -47,6 +50,7 @@
         app:layout_constraintVertical_bias="1.0"
         tools:text="Titulo de la instantanea" />
 
+    <!-- Checkbox para indicar "me gusta" -->
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/cbLike"
         android:layout_width="wrap_content"
@@ -57,6 +61,7 @@
         app:layout_constraintTop_toBottomOf="@id/imgSnapshot"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Imagen de la instantánea -->
     <ImageView
         android:id="@+id/imgSnapshot"
         android:layout_width="0dp"
@@ -69,6 +74,7 @@
         android:layout_marginTop="32dp"
         tools:ignore="ContentDescription" />
 
+    <!-- Icono del usuario -->
     <ImageView
         android:id="@+id/icUser"
         android:layout_width="24dp"
@@ -80,6 +86,7 @@
         app:layout_constraintBottom_toBottomOf="@id/tvUser"
         tools:ignore="ContentDescription" />
 
+    <!-- Separador -->
     <View
         android:id="@+id/separator"
         android:layout_width="0dp"

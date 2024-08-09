@@ -13,42 +13,48 @@ import com.google.firebase.auth.FirebaseAuth
 import com.jlobatonm.snapshots.R
 import com.jlobatonm.snapshots.databinding.FragmentProfileBinding
 
+class ProfileFragment : Fragment() {
 
-class ProfileFragment : Fragment()
-{
+    // Variable de binding para el layout del perfil
     private lateinit var mBinding: FragmentProfileBinding
+
+    // Inflar el layout del fragmento
     override fun onCreateView(
-        inflater: LayoutInflater , container: ViewGroup? ,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View
-    {
-        mBinding = FragmentProfileBinding.inflate(inflater , container , false)
+    ): View {
+        mBinding = FragmentProfileBinding.inflate(inflater, container, false)
         return mBinding.root
     }
-    
-    override fun onViewCreated(view: View , savedInstanceState: Bundle?)
-    {
-        super.onViewCreated(view , savedInstanceState)
-      
+
+    // Configurar la vista una vez creada
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Mostrar el nombre y correo del usuario
         mBinding.tvName.text = FirebaseAuth.getInstance().currentUser?.displayName
         mBinding.tvEmail.text = FirebaseAuth.getInstance().currentUser?.email
+
+        // Cargar la imagen de perfil del usuario
         loadProfileImage()
+
+        // Configurar el botón de logout
         mBinding.btnLogout.setOnClickListener {
             signOut()
         }
     }
-    
-    private fun signOut()
-    {
+
+    // Método para cerrar sesión
+    private fun signOut() {
         context?.let {
             AuthUI.getInstance().signOut(it)
                 .addOnCompleteListener {
-                    Toast.makeText(context , R.string.profile_logout , Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, R.string.profile_logout, Toast.LENGTH_SHORT).show()
                 }
         }
-        
     }
-    
+
+    // Método para cargar la imagen de perfil del usuario
     private fun loadProfileImage() {
         val user = FirebaseAuth.getInstance().currentUser
         user?.photoUrl?.let { uri ->
@@ -60,5 +66,4 @@ class ProfileFragment : Fragment()
                 .into(mBinding.imgProfile)
         }
     }
-    
 }

@@ -5,18 +5,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Botón para eliminar una instantánea -->
     <ImageButton
         android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/common_padding_default"
         android:layout_marginEnd="@dimen/common_padding_default"
         android:background="?attr/selectableItemBackground"
-        android:contentDescription="@string/btn_delete"/>
-    
+        android:contentDescription="@string/btn_delete"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <!-- Título de la instantánea -->
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
@@ -29,6 +32,7 @@
         app:layout_constraintTop_toTopOf="@id/btnDelete"
         app:layout_constraintBottom_toBottomOf="@id/btnDelete"/>
 
+    <!-- Checkbox para indicar "me gusta" -->
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/cbLike"
         android:layout_width="wrap_content"
@@ -37,8 +41,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:button="@drawable/ic_like"
         android:layout_marginStart="@dimen/common_padding_default"
-        android:layout_marginBottom="@dimen/common_padding_default"/>
+        android:layout_marginBottom="@dimen/common_padding_default"
+        tools:ignore="VisualLintOverlap" />
 
+    <!-- Imagen de la instantánea -->
     <ImageView
         android:id="@+id/imgSnapshot"
         android:layout_width="0dp"
@@ -49,7 +55,5 @@
         app:layout_constraintTop_toBottomOf="@id/btnDelete"
         app:layout_constraintBottom_toTopOf="@id/cbLike"
         android:layout_marginTop="@dimen/common_padding_min"
-        />
-    
-
+        tools:ignore="ContentDescription,VisualLintBounds" />
 </androidx.constraintlayout.widget.ConstraintLayout>
